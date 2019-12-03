@@ -1,4 +1,4 @@
-# SBES_Project
+# Projektni zadatak 29. (SBES)
 
 Implementirati servis za replikaciju podataka od primarnog (primary) na sekundarni (backup) sajt.
 
