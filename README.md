@@ -19,4 +19,6 @@ Postoje tri tipa klijenata:
 
 Primarni servis smešta izgenerisane alarme u tekstualnu datoteku samo ako su stigli od ovlašćenog klijenta. Dodatno, primarni servis smešta podatke u odgovarajući buffer za potrebe repliciranja. Klijent i servis na primarnom sajtu komuniciraju preko Windows autentifikacionog protokola, a autorizacija je zasnovana na RBAC modelu.
 
-Sekundarni sajt se sastoji od sekundarnog servisa koji prima sve podatke pristigle replikacijom, smešta ih u tekstualnu datoteku, i ispisuje na konzolu.
+Sekundarni sajt se sastoji od sekundarnog servisa koji prima sve podatke pristigle replikacijom, smešta ih u tekstualnu datoteku, i ispisuje na konzolu. Replikator je komponenta startovana na oba sajta (komponente između sajtova koriste sertifikate za autentifikaciju, ChainTrust). Na primarnom sajtu, kada replikator dobije notifikaciju da su podaci izgenerisani, šalje te podatke replikatoru na sekundarnom sajtu koji dalje obaveštava sekundarni servis da su pristigli novi podaci. Dodatno, prilikom startovanja, Replikator učita sve podatke izgenerisane na primarnom sajtu (od poslednjeg čitanja), i šalje ih sekundarnom sajtu.
+
+Implementirati custom Windows Event Log u okviru koga replikatori loguju svaku akciju replikacije, odnosno replikator na primarnom sajtu treba da loguje da je replikacija inicirana, dok replikator na sekundarnom sajtu loguje kada je replikaciona poruka primljena.
