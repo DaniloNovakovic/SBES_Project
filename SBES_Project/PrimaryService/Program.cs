@@ -10,7 +10,11 @@ namespace PrimaryService
         {
             using (var host = new ServiceHost(typeof(PrimaryService)))
             {
-                host.AddServiceEndpoint(typeof(IPrimaryService), new NetTcpBinding(), "net.tcp://localhost:15000/PrimaryService");
+                var binding = new NetTcpBinding();
+                binding.Security.Mode = SecurityMode.Transport;
+                binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+
+                host.AddServiceEndpoint(typeof(IPrimaryService), binding, "net.tcp://localhost:15000/PrimaryService");
                 host.Open();
 
                 Console.WriteLine($"{nameof(PrimaryService)} is started.");

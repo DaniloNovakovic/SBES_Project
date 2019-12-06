@@ -8,7 +8,11 @@ namespace Client
     {
         private static void Main(string[] args)
         {
-            using (var proxy = new ClientProxy(new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:15000/PrimaryService")))
+            var binding = new NetTcpBinding();
+            binding.Security.Mode = SecurityMode.Transport;
+            binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+            
+            using (var proxy = new ClientProxy(binding, new EndpointAddress("net.tcp://localhost:15000/PrimaryService")))
             {
                 for (int i = 0; i < 5; i++)
                 {
