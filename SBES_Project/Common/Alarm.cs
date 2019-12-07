@@ -26,6 +26,14 @@ namespace Common
             Risk = CalculateRisk();
         }
 
+        public override string ToString()
+        {
+            return $"{Environment.NewLine}\t{nameof(TimeOfAlarm)}: {TimeOfAlarm}" +
+            $"{Environment.NewLine}\t{nameof(NamoOfClient)}: {NamoOfClient}" +
+            $"{Environment.NewLine}\t{nameof(Message)}: {Message}" +
+            $"{Environment.NewLine}\t{nameof(Risk)}: {Risk}";
+        }
+
         private int CalculateRisk()
         {
             return new Random().Next(1, 11);

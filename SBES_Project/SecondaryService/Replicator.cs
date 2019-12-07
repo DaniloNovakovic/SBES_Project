@@ -1,19 +1,27 @@
 ﻿using Common;
+using DAL;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SecondaryService
 {
     public class Replicator : IReplicator
     {
+        private readonly string _serviceId = "SecondaryService";
+        public const string DefaultConnectionString = "DefaultConnection";
+
         public void SendAlarm(Alarm alarm)
         {
-            // TODO: smestanje u bazu na sekundarnom
+            SaveToDatabase(alarm);
 
-            Console.WriteLine($"Sending alarm: {Environment.NewLine}\t{nameof(alarm.TimeOfAlarm)}: {alarm.TimeOfAlarm}{Environment.NewLine}\t{nameof(alarm.NamoOfClient)}: {alarm.NamoOfClient}{Environment.NewLine}\t{nameof(alarm.Message)}: {alarm.Message}{Environment.NewLine}\t{nameof(alarm.Risk)}: {alarm.Risk}");
+            Console.WriteLine($"Sending alarm: {alarm}");
+        }
+
+        private void SaveToDatabase(Alarm alarm)
+        {
+            using (var repo = AlarmRepositoryFactory.CreateNew(DefaultConnectionString))
+            {
+                repo.Add(_serviceId, alarm);
+            }
         }
     }
 }

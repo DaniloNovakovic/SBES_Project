@@ -4,9 +4,9 @@ using System.ServiceModel;
 
 namespace SecondaryService
 {
-    internal class Program
+    internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             using (var host = new ServiceHost(typeof(Replicator)))
             {
@@ -19,7 +19,6 @@ namespace SecondaryService
                 Console.WriteLine("Press <enter> to stop service...");
 
                 Console.ReadLine();
-                host.Close();
             }
         }
     }

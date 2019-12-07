@@ -6,7 +6,7 @@ namespace Client
 {
     public class ClientProxy : ChannelFactory<IPrimaryService>
     {
-        private IPrimaryService factory;
+        private readonly IPrimaryService factory;
 
         public ClientProxy(NetTcpBinding binding, EndpointAddress remoteAddress) : base(binding, remoteAddress)
         {
