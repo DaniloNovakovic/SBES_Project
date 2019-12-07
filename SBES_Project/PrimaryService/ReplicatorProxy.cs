@@ -24,5 +24,18 @@ namespace PrimaryService
                 Console.WriteLine("Error: {0}", e.Message);
             }
         }
+
+        public bool CheckForReplicator()
+        {
+            try
+            {
+                factory.CheckForConnection();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

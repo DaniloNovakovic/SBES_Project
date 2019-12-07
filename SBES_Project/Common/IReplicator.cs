@@ -7,5 +7,8 @@ namespace Common
     {
         [OperationContract]
         void SendAlarm(Alarm alarm);
+
+        [OperationContract]
+        void CheckForConnection();
     }
 }

@@ -23,5 +23,7 @@ namespace SecondaryService
                 repo.Add(_serviceId, alarm);
             }
         }
+
+        public void CheckForConnection() { }
     }
 }
