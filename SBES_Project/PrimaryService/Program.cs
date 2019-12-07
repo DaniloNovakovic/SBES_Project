@@ -4,9 +4,9 @@ using System.ServiceModel;
 
 namespace PrimaryService
 {
-    internal class Program
+    internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             using (var host = new ServiceHost(typeof(PrimaryService)))
             {
@@ -21,7 +21,6 @@ namespace PrimaryService
                 Console.WriteLine("Press <enter> to stop service...");
 
                 Console.ReadLine();
-                host.Close();
             }
         }
     }

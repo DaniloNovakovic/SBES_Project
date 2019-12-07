@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Common;
 
 namespace DAL
 {
-    public class AlarmRepository : IAlarmRepository
+    public class AlarmRepository : IAlarmRepository, IDisposable
     {
         private readonly ApplicationDbContext _context;
 
@@ -33,6 +34,11 @@ namespace DAL
                 .ToList();
             _context.Alarms.RemoveRange(alarmsByClientName);
             _context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
 
         public IEnumerable<Alarm> GetAll()

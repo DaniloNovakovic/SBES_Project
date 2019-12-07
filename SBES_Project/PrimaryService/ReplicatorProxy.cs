@@ -6,7 +6,7 @@ namespace PrimaryService
 {
     public class ReplicatorProxy : ChannelFactory<IReplicator>
     {
-        private IReplicator factory;
+        private readonly IReplicator factory;
 
         public ReplicatorProxy(NetTcpBinding binding, EndpointAddress remoteAddress) : base(binding, remoteAddress)
         {
