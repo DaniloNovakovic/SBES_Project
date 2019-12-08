@@ -43,7 +43,7 @@ namespace DAL
 
         public IEnumerable<Alarm> GetAll()
         {
-            return _context.Alarms.Select(a => new Alarm(a.TimeOfAlarm, a.ClientName, a.Message)).ToList();
+            return _context.Alarms.Select(a => new Alarm() { Message = a.Message, NamoOfClient = a.ClientName, Risk = a.Risk, TimeOfAlarm = a.TimeOfAlarm }).ToList();
         }
     }
 }

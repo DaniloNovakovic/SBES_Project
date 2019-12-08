@@ -26,6 +26,11 @@ namespace Common
             Risk = CalculateRisk();
         }
 
+        public Alarm()
+        {
+
+        }
+
         public override string ToString()
         {
             return $"{Environment.NewLine}\t{nameof(TimeOfAlarm)}: {TimeOfAlarm}" +
