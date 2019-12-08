@@ -2,6 +2,7 @@
 using DAL;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace PrimaryService
         private readonly string _serviceId = "PrimaryService";
         public const string DefaultConnectionString = "DefaultConnection";
 
-        private Queue<Alarm> replicationBuffer = new Queue<Alarm>();
+        private readonly Queue<Alarm> replicationBuffer = new Queue<Alarm>();
 
         public PrimaryService()
         {
@@ -36,8 +37,21 @@ namespace PrimaryService
                 try
                 {
                     var binding = new NetTcpBinding();
+                    binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 
-                    using (var proxy = new ReplicatorProxy(binding, new EndpointAddress("net.tcp://localhost:15001/Replicator")))
+                    /// Define the expected service certificate. It is required to establish
+                    /// communication using certificates.
+                    const string srvCertCN = "SecondaryService";
+
+                    /// Use CertManager class to obtain the certificate based on the "srvCertCN"
+                    /// representing the expected service identity.
+                    var srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, srvCertCN);
+                    var address = new EndpointAddress(
+                        new Uri("net.tcp://localhost:15001/Replicator"),
+                        new X509CertificateEndpointIdentity(srvCert)
+                    );
+
+                    using (var proxy = new ReplicatorProxy(binding, address))
                     {
                         if (proxy.CheckForReplicator())
                         {
