@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
@@ -44,10 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alarm.cs" />
+    <Compile Include="CertificateManager\CertManager.cs" />
+    <Compile Include="CertificateManager\ClientCertValidator.cs" />
+    <Compile Include="CertificateManager\Formatter.cs" />
+    <Compile Include="CertificateManager\ServiceCertValidator.cs" />
     <Compile Include="IAlarmRepository.cs" />
     <Compile Include="IPrimaryService.cs" />
     <Compile Include="IReplicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Certificates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
