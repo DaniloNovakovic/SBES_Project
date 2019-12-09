@@ -45,6 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alarm.cs" />
+    <Compile Include="Formatter.cs" />
+    <Compile Include="Security\ClientRoleConfigFile.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientRoleConfigFile.resx</DependentUpon>
+    </Compile>
     <Compile Include="CertificateManager\CertManager.cs" />
     <Compile Include="CertificateManager\ClientCertValidator.cs" />
     <Compile Include="CertificateManager\Formatter.cs" />
@@ -53,6 +59,15 @@
     <Compile Include="IPrimaryService.cs" />
     <Compile Include="IReplicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\CustomAuthorizationPolicy.cs" />
+    <Compile Include="Security\CustomPrincipal.cs" />
+    <Compile Include="Security\CustomServiceAuthorizationManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Security\ClientRoleConfigFile.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClientRoleConfigFile.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Certificates\" />
