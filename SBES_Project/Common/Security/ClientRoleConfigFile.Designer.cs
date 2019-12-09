@@ -61,7 +61,7 @@ namespace Common.Security {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete.
+        ///   Looks up a localized string similar to Delete|DeleteAll.
         /// </summary>
         internal static string AlarmAdmin {
             get {
@@ -70,7 +70,7 @@ namespace Common.Security {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
+        ///   Looks up a localized string similar to Add|Delete.
         /// </summary>
         internal static string AlarmGenerator {
             get {
@@ -79,7 +79,7 @@ namespace Common.Security {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Read.
+        ///   Looks up a localized string similar to Read|Delete.
         /// </summary>
         internal static string Reader {
             get {

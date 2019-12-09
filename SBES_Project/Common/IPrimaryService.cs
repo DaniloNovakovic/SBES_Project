@@ -14,5 +14,17 @@ namespace Common
 
         [OperationContract]
         void RemoveAllAlarms();
+
+        [OperationContract]
+        void RemoveClientAlarms();
+
+        [OperationContract]
+        List<string> GetClientRemovalRequests();
+        
+        [OperationContract]
+        void ApprovedRemoval(string clientName);
+
+        [OperationContract]
+        void DeniedRemoval(string clientName);
     }
 }

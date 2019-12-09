@@ -13,9 +13,6 @@ namespace Client
 
         public ClientProxy(NetTcpBinding binding, EndpointAddress remoteAddress) : base(binding, remoteAddress)
         {
-            // TODO: podesiti autentifikaciju sa PrimaryService
-            // TODO: podesiti autorizaciju sa PrimaryService
-            Credentials.Windows.AllowedImpersonationLevel = TokenImpersonationLevel.Impersonation;
             factory = CreateChannel();
         }
 
@@ -27,7 +24,7 @@ namespace Client
             }
             catch (SecurityAccessDeniedException e)
             {
-                Console.WriteLine("Error: {0}", e.Message);
+                Console.WriteLine("Error while trying to send alarm: {0}", e.Message);
             }
         }
 
@@ -39,7 +36,7 @@ namespace Client
             }
             catch (SecurityAccessDeniedException e)
             {
-                Console.WriteLine("Error while trying to get all alarms. Error message: {0}", e.Message);
+                Console.WriteLine("Error while trying to get all alarms: {0}", e.Message);
             }
 
             return new List<Alarm>();
@@ -49,11 +46,49 @@ namespace Client
         {
             try
             {
-                factory.RemoveAllAlarms();
+                factory.RemoveClientAlarms();
             }
             catch (SecurityAccessDeniedException e)
             {
-                Console.WriteLine("Error: {0}", e.Message);
+                Console.WriteLine("Error while trying to remove alarm: {0}", e.Message);
+            }
+        }
+
+        public List<string> GetClientRemovalRequests()
+        {
+            try
+            {
+                return factory.GetClientRemovalRequests();
+            }
+            catch (SecurityAccessDeniedException e)
+            {
+                Console.WriteLine("Error while trying to get requests: {0}", e.Message);
+            }
+
+            return new List<string>();
+        }
+
+        public void ApprovedRemoval(string clientName)
+        {
+            try
+            {
+                factory.ApprovedRemoval(clientName);
+            }
+            catch (SecurityAccessDeniedException e)
+            {
+                Console.WriteLine("Error while approving removal: {0}", e.Message);
+            }
+        }
+
+        public void DeniedRemoval(string clientName)
+        {
+            try
+            {
+                factory.DeniedRemoval(clientName);
+            }
+            catch (SecurityAccessDeniedException e)
+            {
+                Console.WriteLine("Error while denying removal: {0}", e.Message);
             }
         }
     }

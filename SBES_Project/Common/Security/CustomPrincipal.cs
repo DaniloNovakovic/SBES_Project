@@ -19,14 +19,18 @@ namespace Common.Security
             foreach (var item in windowsIdentity.Groups)
             {
                 var name = ((SecurityIdentifier)item.Translate(typeof(SecurityIdentifier))).Translate(typeof(NTAccount));
-                var groupName = Parser.Parse(name);
+                var groupName = Formatter.Format(name);
 
                 var permision = ClientRoleConfigFile.ResourceManager.GetObject(groupName);
                 if (permision != null)
                 {
-                    if (role == permision.ToString())
+                    var permissions = permision.ToString().Split('|');
+                    foreach (var perm in permissions)
                     {
-                        return true;
+                        if (role == perm)
+                        {
+                            return true;
+                        }
                     }
                 }
             }

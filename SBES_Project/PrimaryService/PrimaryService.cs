@@ -26,7 +26,7 @@ namespace PrimaryService
         [PrincipalPermission(SecurityAction.Demand, Role = "Add")]
         public void SendAlarm(Alarm alarm)
         {
-            alarm.NamoOfClient = Parser.Parse((Thread.CurrentPrincipal.Identity as WindowsIdentity).User.Translate(typeof(NTAccount)));
+            alarm.NamoOfClient = Formatter.Format((Thread.CurrentPrincipal.Identity as WindowsIdentity).User.Translate(typeof(NTAccount)));
 
             SaveToDatabase(alarm);
 
@@ -42,41 +42,57 @@ namespace PrimaryService
             }
         }
 
-        [PrincipalPermission(SecurityAction.Demand, Role = "Delete")]
-        //[OperationBehavior(Impersonation = ImpersonationOption.Required)]
+        [PrincipalPermission(SecurityAction.Demand, Role = "DeleteAll")]
         public void RemoveAllAlarms()
         {
             using (var repo = AlarmRepositoryFactory.CreateNew(DefaultConnectionString))
             {
-                var identity = WindowsIdentity.GetCurrent();
+                repo.DeleteAll();
+            }
+        }
 
-                using (identity.Impersonate())
-                {
-                    var identity2 = Thread.CurrentPrincipal.Identity as WindowsIdentity;
-                    Console.WriteLine(identity2.Name);
+        [PrincipalPermission(SecurityAction.Demand, Role = "Delete")]
+        public void RemoveClientAlarms()
+        {
+            var clientName = Formatter.Format((Thread.CurrentPrincipal.Identity as WindowsIdentity).User.Translate(typeof(NTAccount)));
 
-                    var a = WindowsIdentity.GetCurrent().Name;
-                    Console.WriteLine(a);
-                }
-
-                //var identity = Thread.CurrentPrincipal.Identity as WindowsIdentity;
-                //using (identity.Impersonate())
-                //{
-                //    var identity2 = Thread.CurrentPrincipal.Identity as WindowsIdentity;
-                //    Console.WriteLine(identity2.Name);
-
-                //    var a = WindowsIdentity.GetCurrent().Name;
-                //    Console.WriteLine(a);
-                //}
-
-                //Console.WriteLine(identity.Name);
+            AddForRemovalEvaluation(clientName);
+        }
 
 
-                //var client = identity.User.Translate(typeof(NTAccount));
-                //var clientName = Parser.Parse(client);
-                //Console.WriteLine(clientName);
+        [PrincipalPermission(SecurityAction.Demand, Role = "DeleteAll")]
+        public List<string> GetClientRemovalRequests()
+        {
+            using (var repo = AlarmRepositoryFactory.CreateNew(DefaultConnectionString))
+            {
+                return repo.GetAllClientRequests().ToList();
+            }
+        }
 
-                //repo.DeleteAllByClientName(clientName);
+        private void AddForRemovalEvaluation(string clientName)
+        {
+            using (var repo = AlarmRepositoryFactory.CreateNew(DefaultConnectionString))
+            {
+                repo.AddClientRequest(clientName);
+            }
+        }
+
+        [PrincipalPermission(SecurityAction.Demand, Role = "DeleteAll")]
+        public void ApprovedRemoval(string clientName)
+        {
+            using (var repo = AlarmRepositoryFactory.CreateNew(DefaultConnectionString))
+            {
+                repo.DeleteAllByClientName(clientName);
+                repo.RemoveClientRequest(clientName);
+            }
+        }
+
+        [PrincipalPermission(SecurityAction.Demand, Role = "DeleteAll")]
+        public void DeniedRemoval(string clientName)
+        {
+            using (var repo = AlarmRepositoryFactory.CreateNew(DefaultConnectionString))
+            {
+                repo.RemoveClientRequest(clientName);
             }
         }
 

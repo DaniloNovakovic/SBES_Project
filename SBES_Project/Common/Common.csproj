@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alarm.cs" />
-    <Compile Include="Parser.cs" />
+    <Compile Include="Formatter.cs" />
     <Compile Include="Security\ClientRoleConfigFile.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

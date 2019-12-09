@@ -28,6 +28,7 @@ namespace PrimaryService
                     new CustomAuthorizationPolicy()
                 };
                 host.Authorization.ExternalAuthorizationPolicies = policies.AsReadOnly();
+                host.Authorization.ServiceAuthorizationManager = new CustomServiceAuthorizationManager();
 
                 host.Open();
 

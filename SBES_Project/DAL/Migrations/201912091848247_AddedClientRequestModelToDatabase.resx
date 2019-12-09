@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlarmAdmin" xml:space="preserve">
-    <value>Delete|DeleteAll</value>
+  <data name="Target" xml:space="preserve">
+    <value>H4sIAAAAAAAEANVY227bRhB9L9B/IPapBRytL0WTGlQCVbILo77BdPK+IkfyIssls7sUpG/rQz+pv9BZ3m+SqahxXOiFGs6cmZ2ZnQv/+etv98M6FM4KlOaRHJOT0TFxQPpRwOVyTBKzePOOfHj/4w/uRRCunU8F35nlQ0mpx+TJmPicUu0/Qcj0KOS+inS0MCM/CikLInp6fPwbPTmhgBAEsRzHfUik4SGkf/DvNJI+xCZh4iYKQOicjm+8FNW5ZSHomPkwJrPJNXEmgjNU7YFYEIdJGRlm0LDzjxo8oyK59GIkMPG4iQH5FkxoyA0+r9iH2n58am2nlWAB5SfaROGegCdnuTNoW/yrXEpKZ6G7LtCtZmNPnbpsTCaCqTCjEqet73wqlOVNnTqqsR45SDgqw41ZYX9HzjQRJlEwlpAYxcSRc5/MBff/hM1j9BnkWCZC1O1Bi/Bdg4CkexXFoMzmARa5lVcBcWhTjrYFS7GaTGb8lTS//kKcW1TO5gLKcNcO6plIwR8gQTEDwT0zBpS0GJC7hu7UNRUcGe1zoROzDG8IcW7Y+hrk0jyNCT4S55KvISgouR0fJccLhUJGJdBj527dN6A1W34HxQ9cf665+Ox0bwQP1Ir7UEXq5Yx/xOpyt0hTulBuSc/guLS6QDuvVZYQD/AlAW30sPvVJ/O/u2i9WfBKL9rwyGL/MYyj0UXVjGP0dnqi2dy+hLXpCS92mzzCOtfZPFwG7oGpF2NNnMqUrIWNGlWa7gZpplEPWH9u9jmjPHbVb2nWcIvGTLd0ZveGxTHGpdapc4rjZW16+sbbv52FGQb1dU9XK60tNWGuYWVsvUXVaOklV9rMmGFzZjNjGoQdtt4gb/F9obIRx/Z1qyJRsNvnTKTVYNuylf8u8Ughxi89HZQGNDt5RzqdlBhy9NzdaSSSUG67/7uk67exjlKnD0crG1kdqiQOx8n6Uh0kowxHqPWlOkyNPByr0WjqaI0XXTyXtgLezibaSadW3W4n56DUbVWPfVO4t7bsn8vDYF5TUn/TcHXqcZul1F7W5Vb9dfNa+Pz61CmOGQtx0E0rHtjC6G20gXBkGUbeF5E5pmK4YZIvMG7ZJEJwoTltLWSvZzmiWgdi+Ib04hPVnC+59e2zY9Oe4293jpIrpvwnpn4K2frnQ5eQw8Dqi0V6+kPXisPM6VkVTLoq3Cvwefa94+03XRxePO2+d84dOp93J7wBg3cxCe+evrNyOCbBPMJjZOZWDBz0ngP6Vq39bH3qezg7duwx0ndbhUvr3+PcGWi+rCDs1zkJvq3BFWjBcyUXUZEH6IK6RQVLp5QYFmDYJsrwBfMNvvaxuqRL3icmEmS5COcQXMm7xMSJmWgN4Vw0VhiX7taf7i1Nm9272P7T/8UR0EyOR4A7+XvCRVDafdlTGLZA2AzO7x5ahUsuwi03JdJtJAcC5e6bQQzS3txHCGOBYPpOemwFX2MbrrXXsGT+puj420GeD0TT7e6Ms6Vioc4xKnn7jZnaj8zv/wUzyQ+jlhYAAA==</value>
   </data>
-  <data name="AlarmGenerator" xml:space="preserve">
-    <value>Add|Delete</value>
-  </data>
-  <data name="Reader" xml:space="preserve">
-    <value>Read|Delete</value>
+  <data name="DefaultSchema" xml:space="preserve">
+    <value>dbo</value>
   </data>
 </root>
