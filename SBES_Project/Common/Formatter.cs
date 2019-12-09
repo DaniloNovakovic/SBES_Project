@@ -1,12 +1,30 @@
-﻿using System.Security.Principal;
-
-namespace Common
+﻿namespace Common
 {
     public static class Formatter
     {
-        public static string Format(IdentityReference name)
+        /// <summary> Returns username based on the Windows Logon Name. </summary> <param
+        /// name="winLogonName"> Windows logon name can be formatted either as a UPN
+        /// (<username>@<domain_name>) or a SPN (<domain_name>\<username>) </param> <returns>
+        /// username </returns>
+        public static string ParseName(string winLogonName)
         {
-            return name.Value.Contains("@") ? name.Value.Split('@')[0] : name.Value.Contains("\\") ? name.Value.Split('\\')[1] : name.Value;
+            string[] parts;
+            if (winLogonName.Contains("@"))
+            {
+                ///UPN format
+                parts = winLogonName.Split('@');
+                return parts[0];
+            }
+            else if (winLogonName.Contains("\\"))
+            {
+                /// SPN format
+                parts = winLogonName.Split('\\');
+                return parts[1];
+            }
+            else
+            {
+                return winLogonName;
+            }
         }
     }
 }

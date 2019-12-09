@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alarm.cs" />
-    <Compile Include="Formatter.cs" />
     <Compile Include="Security\ClientRoleConfigFile.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -53,7 +52,7 @@
     </Compile>
     <Compile Include="CertificateManager\CertManager.cs" />
     <Compile Include="CertificateManager\ClientCertValidator.cs" />
-    <Compile Include="CertificateManager\Formatter.cs" />
+    <Compile Include="Formatter.cs" />
     <Compile Include="CertificateManager\ServiceCertValidator.cs" />
     <Compile Include="IAlarmRepository.cs" />
     <Compile Include="IPrimaryService.cs" />

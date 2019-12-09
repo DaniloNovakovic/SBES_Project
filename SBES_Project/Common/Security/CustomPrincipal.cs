@@ -18,8 +18,8 @@ namespace Common.Security
         {
             foreach (var item in windowsIdentity.Groups)
             {
-                var name = ((SecurityIdentifier)item.Translate(typeof(SecurityIdentifier))).Translate(typeof(NTAccount));
-                var groupName = Formatter.Format(name);
+                var name = ((SecurityIdentifier)item.Translate(typeof(SecurityIdentifier))).Translate(typeof(NTAccount)).Value;
+                var groupName = Formatter.ParseName(name);
 
                 var permision = ClientRoleConfigFile.ResourceManager.GetObject(groupName);
                 if (permision != null)

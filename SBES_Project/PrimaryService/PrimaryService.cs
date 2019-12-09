@@ -26,7 +26,7 @@ namespace PrimaryService
         [PrincipalPermission(SecurityAction.Demand, Role = "Add")]
         public void SendAlarm(Alarm alarm)
         {
-            alarm.NamoOfClient = Formatter.Format((Thread.CurrentPrincipal.Identity as WindowsIdentity).User.Translate(typeof(NTAccount)));
+            alarm.NamoOfClient = Formatter.ParseName((Thread.CurrentPrincipal.Identity as WindowsIdentity).User.Translate(typeof(NTAccount)).Value);
 
             SaveToDatabase(alarm);
 
@@ -54,7 +54,7 @@ namespace PrimaryService
         [PrincipalPermission(SecurityAction.Demand, Role = "Delete")]
         public void RemoveClientAlarms()
         {
-            var clientName = Formatter.Format((Thread.CurrentPrincipal.Identity as WindowsIdentity).User.Translate(typeof(NTAccount)));
+            var clientName = Formatter.ParseName((Thread.CurrentPrincipal.Identity as WindowsIdentity).User.Translate(typeof(NTAccount)).Value);
 
             AddForRemovalEvaluation(clientName);
         }
