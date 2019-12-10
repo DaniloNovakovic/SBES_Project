@@ -2,6 +2,7 @@
 using DAL;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace PrimaryService
             replicationBuffer.Enqueue(alarm);
         }
 
-        private void TrySendToSecondary()
+        private void TrySendToSecondary(string srvCertCN = "replicatorservice")
         {
             while (true)
             {
@@ -39,13 +40,9 @@ namespace PrimaryService
                     var binding = new NetTcpBinding();
                     binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 
-                    /// Define the expected service certificate. It is required to establish
-                    /// communication using certificates.
-                    const string srvCertCN = "SecondaryService";
-
-                    /// Use CertManager class to obtain the certificate based on the "srvCertCN"
-                    /// representing the expected service identity.
+                    // Get public certificate (.cer) from Replicator Service located in LocalMachine\TrustedPeople
                     var srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, srvCertCN);
+
                     var address = new EndpointAddress(
                         new Uri("net.tcp://localhost:15001/Replicator"),
                         new X509CertificateEndpointIdentity(srvCert)
@@ -64,7 +61,14 @@ namespace PrimaryService
                         }
                     }
                 }
-                catch (CommunicationObjectFaultedException) { }
+                catch (CommunicationObjectFaultedException cex)
+                {
+                    Trace.TraceWarning(cex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(ex.Message);
+                }
 
                 Task.Delay(500);
             }

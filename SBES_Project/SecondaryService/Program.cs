@@ -1,7 +1,7 @@
 ﻿using Common;
 using System;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Principal;
 using System.ServiceModel;
 using System.ServiceModel.Security;
 
@@ -26,7 +26,7 @@ namespace SecondaryService
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                Trace.TraceError(ex.Message);
             }
         }
 
@@ -42,11 +42,11 @@ namespace SecondaryService
             ///If CA doesn't have a CRL associated, WCF blocks every client because it cannot be validated
             host.Credentials.ClientCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
 
-            string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+            const string srvCertCN = "replicatorservice";
 
-            ///Set appropriate service's certificate on the host. Use CertManager class to obtain the certificate based on the "srvCertCN"
-            host.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My,
-                StoreLocation.LocalMachine, srvCertCN);
+            /// Get the private (.pfx) certificate for Replicator Service from LocalMachine\My (Personal)
+            host.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromStorage(
+                StoreName.My, StoreLocation.LocalMachine, srvCertCN);
         }
     }
 }
