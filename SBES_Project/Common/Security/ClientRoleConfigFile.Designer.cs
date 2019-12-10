@@ -61,7 +61,7 @@ namespace Common.Security {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete|DeleteAll.
+        ///   Looks up a localized string similar to Delete|DeleteAll|Add|Read.
         /// </summary>
         internal static string AlarmAdmin {
             get {

@@ -130,7 +130,7 @@ namespace PrimaryService
                 }
                 catch (CommunicationObjectFaultedException cex)
                 {
-                    Trace.TraceWarning(cex.Message);
+                    //Trace.TraceWarning(cex.Message);
                 }
                 catch (Exception ex)
                 {
