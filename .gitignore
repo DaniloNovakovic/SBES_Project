@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+makecert.exe
+pvk2pfx.exe
+winhttpcertcfg.exe
+
 # User-specific files
 *.suo
 *.user

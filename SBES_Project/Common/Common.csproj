@@ -51,9 +51,7 @@
       <DependentUpon>ClientRoleConfigFile.resx</DependentUpon>
     </Compile>
     <Compile Include="CertificateManager\CertManager.cs" />
-    <Compile Include="CertificateManager\ClientCertValidator.cs" />
     <Compile Include="Formatter.cs" />
-    <Compile Include="CertificateManager\ServiceCertValidator.cs" />
     <Compile Include="IAlarmRepository.cs" />
     <Compile Include="IPrimaryService.cs" />
     <Compile Include="IReplicator.cs" />

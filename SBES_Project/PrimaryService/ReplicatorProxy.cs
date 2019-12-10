@@ -1,6 +1,8 @@
 ﻿using Common;
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
+using System.ServiceModel.Security;
 
 namespace PrimaryService
 {
@@ -8,8 +10,14 @@ namespace PrimaryService
     {
         private readonly IReplicator factory;
 
-        public ReplicatorProxy(NetTcpBinding binding, EndpointAddress remoteAddress) : base(binding, remoteAddress)
+        public ReplicatorProxy(NetTcpBinding binding, EndpointAddress remoteAddress, string cltCertCN = "replicatorclient") : base(binding, remoteAddress)
         {
+            Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
+            Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
+
+            /// Get private (.pfx) certificate from LocalMachine\My (Personal) for Replicator Client
+            Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
+
             factory = CreateChannel();
         }
 
