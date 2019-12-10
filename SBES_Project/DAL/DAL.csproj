@@ -55,10 +55,15 @@
     <Compile Include="AlarmRepository.cs" />
     <Compile Include="AlarmRepositoryFactory.cs" />
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="ClientRequestsEntity.cs" />
     <Compile Include="Configurations\AlarmConfiguration.cs" />
     <Compile Include="Migrations\201912071927369_InitialMigration.cs" />
     <Compile Include="Migrations\201912071927369_InitialMigration.designer.cs">
       <DependentUpon>201912071927369_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912091848247_AddedClientRequestModelToDatabase.cs" />
+    <Compile Include="Migrations\201912091848247_AddedClientRequestModelToDatabase.designer.cs">
+      <DependentUpon>201912091848247_AddedClientRequestModelToDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,6 +81,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201912071927369_InitialMigration.resx">
       <DependentUpon>201912071927369_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912091848247_AddedClientRequestModelToDatabase.resx">
+      <DependentUpon>201912091848247_AddedClientRequestModelToDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

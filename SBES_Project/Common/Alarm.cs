@@ -18,10 +18,10 @@ namespace Common
         [DataMember]
         public int Risk { get; set; }
 
-        public Alarm(TimeSpan timeOfAlarm, string namoOfClient, string message)
+        public Alarm(TimeSpan timeOfAlarm, string message)
         {
             TimeOfAlarm = timeOfAlarm;
-            NamoOfClient = namoOfClient;
+            NamoOfClient = string.Empty;
             Message = message;
             Risk = CalculateRisk();
         }

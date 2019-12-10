@@ -15,6 +15,8 @@ namespace DAL
 
         public DbSet<AlarmEntity> Alarms { get; set; }
 
+        public DbSet<ClientRequestsEntity> ClientRequests { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.AddFromAssembly(typeof(AlarmConfiguration).Assembly);

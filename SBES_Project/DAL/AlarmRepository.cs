@@ -14,6 +14,7 @@ namespace DAL
             _context = context;
         }
 
+        #region Alarm
         public void Add(string serviceId, Alarm alarm)
         {
             _context.Alarms.Add(new AlarmEntity(serviceId, alarm));
@@ -30,7 +31,7 @@ namespace DAL
         public void DeleteAllByClientName(string clientName)
         {
             var alarmsByClientName = _context.Alarms
-                .Where(a => a.ClientName.Equals(clientName, System.StringComparison.OrdinalIgnoreCase))
+                .Where(a => a.ClientName.Equals(clientName, StringComparison.OrdinalIgnoreCase))
                 .ToList();
             _context.Alarms.RemoveRange(alarmsByClientName);
             _context.SaveChanges();
@@ -45,5 +46,29 @@ namespace DAL
         {
             return _context.Alarms.Select(a => new Alarm() { Message = a.Message, NamoOfClient = a.ClientName, Risk = a.Risk, TimeOfAlarm = a.TimeOfAlarm }).ToList();
         }
+        #endregion
+
+        #region ClientRequests
+        public void AddClientRequest(string clientName)
+        {
+            if (_context.ClientRequests.Select(s=> s.ClientName).Where(item=> item.Equals(clientName, StringComparison.OrdinalIgnoreCase)).Count() < 1)
+            {
+                _context.ClientRequests.Add(new ClientRequestsEntity() { ClientName = clientName });
+                _context.SaveChanges();
+            }
+        }
+
+        public void RemoveClientRequest(string clientName)
+        {
+            var client = _context.ClientRequests.Where(item => item.ClientName.Equals(clientName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            _context.ClientRequests.Remove(client);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<string> GetAllClientRequests()
+        {
+            return _context.ClientRequests.Select(s => s.ClientName).ToList();
+        }
+        #endregion
     }
 }
