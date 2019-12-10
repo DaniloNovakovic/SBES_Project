@@ -18,17 +18,16 @@ namespace Common
         [DataMember]
         public int Risk { get; set; }
 
-        public Alarm(TimeSpan timeOfAlarm, string message)
+        public Alarm(TimeSpan timeOfAlarm, string message) : this()
         {
             TimeOfAlarm = timeOfAlarm;
             NamoOfClient = string.Empty;
             Message = message;
-            Risk = CalculateRisk();
         }
 
         public Alarm()
         {
-
+            Risk = CalculateRisk();
         }
 
         public override string ToString()
@@ -41,7 +40,7 @@ namespace Common
 
         private int CalculateRisk()
         {
-            return new Random().Next(1, 11);
+            return new Random().Next(1, 101);
         }
     }
 }

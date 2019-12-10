@@ -22,7 +22,7 @@ namespace PrimaryService
                 host.Description.Behaviors.Remove(typeof(ServiceDebugBehavior));
                 host.Description.Behaviors.Add(new ServiceDebugBehavior() { IncludeExceptionDetailInFaults = true });
 
-                host.Authorization.PrincipalPermissionMode = System.ServiceModel.Description.PrincipalPermissionMode.Custom;
+                host.Authorization.PrincipalPermissionMode = PrincipalPermissionMode.Custom;
                 var policies = new List<IAuthorizationPolicy>
                 {
                     new CustomAuthorizationPolicy()

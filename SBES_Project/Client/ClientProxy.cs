@@ -1,7 +1,6 @@
 ﻿using Common;
 using System;
 using System.Collections.Generic;
-using System.Security.Principal;
 using System.ServiceModel;
 using System.ServiceModel.Security;
 
@@ -16,7 +15,7 @@ namespace Client
             factory = CreateChannel();
         }
 
-        public void SendAlarm(Alarm alarm)
+        public bool SendAlarm(Alarm alarm)
         {
             try
             {
@@ -25,24 +24,28 @@ namespace Client
             catch (SecurityAccessDeniedException e)
             {
                 Console.WriteLine("Error while trying to send alarm: {0}", e.Message);
+                return false;
             }
+            return true;
         }
 
-        public List<Alarm> GetAllAlarms()
+        public Tuple<List<Alarm>, bool> GetAllAlarms()
         {
+            var alarms = new List<Alarm>();
             try
             {
-                return factory.GetAlarms();
+                alarms = factory.GetAlarms();
             }
             catch (SecurityAccessDeniedException e)
             {
                 Console.WriteLine("Error while trying to get all alarms: {0}", e.Message);
+                return new Tuple<List<Alarm>, bool>(alarms, false);
             }
 
-            return new List<Alarm>();
+            return new Tuple<List<Alarm>, bool>(alarms, true);
         }
 
-        public void RemoveAlarms()
+        public bool RemoveClientAlarms()
         {
             try
             {
@@ -51,24 +54,28 @@ namespace Client
             catch (SecurityAccessDeniedException e)
             {
                 Console.WriteLine("Error while trying to remove alarm: {0}", e.Message);
+                return false;
             }
+            return true;
         }
 
-        public List<string> GetClientRemovalRequests()
+        public Tuple<List<string>, bool> GetClientRemovalRequests()
         {
+            var requests = new List<string>();
             try
             {
-                return factory.GetClientRemovalRequests();
+                requests = factory.GetClientRemovalRequests();
             }
             catch (SecurityAccessDeniedException e)
             {
                 Console.WriteLine("Error while trying to get requests: {0}", e.Message);
+                return new Tuple<List<string>, bool>(requests, false);
             }
 
-            return new List<string>();
+            return new Tuple<List<string>, bool>(requests, true);
         }
 
-        public void ApprovedRemoval(string clientName)
+        public bool ApprovedRemoval(string clientName)
         {
             try
             {
@@ -77,10 +84,12 @@ namespace Client
             catch (SecurityAccessDeniedException e)
             {
                 Console.WriteLine("Error while approving removal: {0}", e.Message);
+                return false;
             }
+            return true;
         }
 
-        public void DeniedRemoval(string clientName)
+        public bool DeniedRemoval(string clientName)
         {
             try
             {
@@ -89,7 +98,23 @@ namespace Client
             catch (SecurityAccessDeniedException e)
             {
                 Console.WriteLine("Error while denying removal: {0}", e.Message);
+                return false;
             }
+            return true;
+        }
+
+        public bool RemoveAllAlarms()
+        {
+            try
+            {
+                factory.RemoveAllAlarms();
+            }
+            catch (SecurityAccessDeniedException e)
+            {
+                Console.WriteLine("Error while trying to remove all alarms: {0}", e.Message);
+                return false;
+            }
+            return true;
         }
     }
 }
