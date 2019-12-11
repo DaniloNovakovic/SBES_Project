@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Auditing;
 using DAL;
 using System;
 
@@ -11,9 +12,18 @@ namespace SecondaryService
 
         public void SendAlarm(Alarm alarm)
         {
-            SaveToDatabase(alarm);
+            try
+            {
+                SaveToDatabase(alarm);
 
-            Console.WriteLine($"Sending alarm: {alarm}");
+                Console.WriteLine($"Alarm saved: {alarm}");
+                // Audit.ReplicationSuccess(alarm);
+            }
+            catch (Exception ex)
+            {
+                // Audit.ReplicationFailure(alarm, ex.Message);
+                throw;
+            }
         }
 
         private void SaveToDatabase(Alarm alarm)
@@ -24,6 +34,8 @@ namespace SecondaryService
             }
         }
 
-        public void CheckForConnection() { }
+        public void CheckForConnection()
+        {
+        }
     }
 }

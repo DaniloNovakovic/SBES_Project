@@ -10,6 +10,7 @@ using System.Security.Principal;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Auditing;
 
 namespace PrimaryService
 {
@@ -61,7 +62,6 @@ namespace PrimaryService
             AddForRemovalEvaluation(clientName);
         }
 
-
         [PrincipalPermission(SecurityAction.Demand, Role = "DeleteAll")]
         public List<string> GetClientRemovalRequests()
         {
@@ -102,6 +102,11 @@ namespace PrimaryService
         {
             while (true)
             {
+                if (replicationBuffer.Count == 0)
+                {
+                    continue;
+                }
+
                 try
                 {
                     var binding = new NetTcpBinding();
@@ -119,6 +124,10 @@ namespace PrimaryService
                     {
                         if (proxy.CheckForReplicator())
                         {
+                            // Audit.ReplicationInitiated(); // throws error for some reason.
+
+                            Trace.TraceInformation("Replication initiated");
+
                             while (replicationBuffer.Count > 0)
                             {
                                 var alarm = replicationBuffer.Dequeue();
@@ -128,9 +137,8 @@ namespace PrimaryService
                         }
                     }
                 }
-                catch (CommunicationObjectFaultedException cex)
+                catch (CommunicationObjectFaultedException)
                 {
-                    //Trace.TraceWarning(cex.Message);
                 }
                 catch (Exception ex)
                 {
