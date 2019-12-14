@@ -10,6 +10,7 @@ using System.Security.Principal;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Auditing;
 
 namespace PrimaryService
 {
@@ -22,7 +23,7 @@ namespace PrimaryService
 
         public PrimaryService()
         {
-            new Task(() => TrySendToSecondary(), TaskCreationOptions.LongRunning).Start();
+            new Task(async() => await TrySendToSecondary(), TaskCreationOptions.LongRunning).Start();
         }
 
         [PrincipalPermission(SecurityAction.Demand, Role = "Add")]
@@ -61,7 +62,6 @@ namespace PrimaryService
             AddForRemovalEvaluation(clientName);
         }
 
-
         [PrincipalPermission(SecurityAction.Demand, Role = "DeleteAll")]
         public List<string> GetClientRemovalRequests()
         {
@@ -98,10 +98,15 @@ namespace PrimaryService
             }
         }
 
-        private void TrySendToSecondary(string srvCertCN = "replicatorservice")
+        private async Task TrySendToSecondary(string srvCertCN = "replicatorservice")
         {
             while (true)
             {
+                if (replicationBuffer.Count == 0)
+                {
+                    continue;
+                }
+
                 try
                 {
                     var binding = new NetTcpBinding();
@@ -121,6 +126,7 @@ namespace PrimaryService
                         {
                             while (replicationBuffer.Count > 0)
                             {
+                                Audit.ReplicationInitiated(); // throws error for some reason.
                                 var alarm = replicationBuffer.Dequeue();
                                 proxy.SendToSecondary(alarm);
                                 Console.WriteLine($"Sent alarm: {alarm}");
@@ -128,16 +134,13 @@ namespace PrimaryService
                         }
                     }
                 }
-                catch (CommunicationObjectFaultedException cex)
-                {
-                    //Trace.TraceWarning(cex.Message);
-                }
+                catch (CommunicationObjectFaultedException) { }
                 catch (Exception ex)
                 {
                     Trace.TraceError(ex.Message);
                 }
 
-                Task.Delay(500);
+                await Task.Delay(500);
             }
         }
 

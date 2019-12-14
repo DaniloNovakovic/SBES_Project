@@ -45,6 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alarm.cs" />
+    <Compile Include="Auditing\Audit.cs" />
+    <Compile Include="Auditing\AuditEventFile.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuditEventFile.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Auditing\AuditEvents.cs" />
+    <Compile Include="Auditing\EventLogFactory.cs" />
     <Compile Include="Security\ClientRoleConfigFile.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -61,6 +69,10 @@
     <Compile Include="Security\CustomServiceAuthorizationManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Auditing\AuditEventFile.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AuditEventFile.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Security\ClientRoleConfigFile.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientRoleConfigFile.Designer.cs</LastGenOutput>
