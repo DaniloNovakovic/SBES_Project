@@ -17,11 +17,11 @@ namespace SecondaryService
                 SaveToDatabase(alarm);
 
                 Console.WriteLine($"Alarm saved: {alarm}");
-                // Audit.ReplicationSuccess(alarm);
+                Audit.ReplicationSuccess(alarm);
             }
             catch (Exception ex)
             {
-                // Audit.ReplicationFailure(alarm, ex.Message);
+                Audit.ReplicationFailure(alarm, ex.Message);
                 throw;
             }
         }
