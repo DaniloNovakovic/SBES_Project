@@ -23,13 +23,13 @@ namespace PrimaryService
 
         public PrimaryService()
         {
-            new Task(async() => await TrySendToSecondary(), TaskCreationOptions.LongRunning).Start();
+            new Task(async () => await TrySendToSecondary(), TaskCreationOptions.LongRunning).Start();
         }
 
         [PrincipalPermission(SecurityAction.Demand, Role = "Add")]
         public void SendAlarm(Alarm alarm)
         {
-            alarm.NamoOfClient = Formatter.ParseName((Thread.CurrentPrincipal.Identity as WindowsIdentity).User.Translate(typeof(NTAccount)).Value);
+            alarm.ClientName = Formatter.ParseName((Thread.CurrentPrincipal.Identity as WindowsIdentity).User.Translate(typeof(NTAccount)).Value);
 
             SaveToDatabase(alarm);
 
@@ -41,7 +41,7 @@ namespace PrimaryService
         {
             using (var repo = AlarmRepositoryFactory.CreateNew(DefaultConnectionString))
             {
-                return repo.GetAll().ToList();
+                return repo.GetAllByServiceId(_serviceId).ToList();
             }
         }
 

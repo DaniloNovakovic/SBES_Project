@@ -13,7 +13,7 @@ namespace DAL
         {
             ServiceId = serviceId;
             TimeOfAlarm = alarmDto.TimeOfAlarm;
-            ClientName = alarmDto.NamoOfClient;
+            ClientName = alarmDto.ClientName;
             Message = alarmDto.Message;
             Risk = alarmDto.Risk;
         }

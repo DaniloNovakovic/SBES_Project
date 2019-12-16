@@ -4,7 +4,7 @@ namespace Common
 {
     public interface IAlarmRepository
     {
-        IEnumerable<Alarm> GetAll();
+        IEnumerable<Alarm> GetAllByServiceId(string serviceId);
 
         void Add(string serviceId, Alarm alarm);
 

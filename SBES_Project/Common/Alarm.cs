@@ -10,7 +10,7 @@ namespace Common
         public TimeSpan TimeOfAlarm { get; set; }
 
         [DataMember]
-        public string NamoOfClient { get; set; }
+        public string ClientName { get; set; }
 
         [DataMember]
         public string Message { get; set; }
@@ -21,7 +21,7 @@ namespace Common
         public Alarm(TimeSpan timeOfAlarm, string message) : this()
         {
             TimeOfAlarm = timeOfAlarm;
-            NamoOfClient = string.Empty;
+            ClientName = string.Empty;
             Message = message;
         }
 
@@ -33,7 +33,7 @@ namespace Common
         public override string ToString()
         {
             return $"{Environment.NewLine}\t{nameof(TimeOfAlarm)}: {TimeOfAlarm}" +
-            $"{Environment.NewLine}\t{nameof(NamoOfClient)}: {NamoOfClient}" +
+            $"{Environment.NewLine}\t{nameof(ClientName)}: {ClientName}" +
             $"{Environment.NewLine}\t{nameof(Message)}: {Message}" +
             $"{Environment.NewLine}\t{nameof(Risk)}: {Risk}";
         }

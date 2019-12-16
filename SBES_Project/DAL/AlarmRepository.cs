@@ -15,6 +15,7 @@ namespace DAL
         }
 
         #region Alarm
+
         public void Add(string serviceId, Alarm alarm)
         {
             _context.Alarms.Add(new AlarmEntity(serviceId, alarm));
@@ -42,16 +43,21 @@ namespace DAL
             _context.Dispose();
         }
 
-        public IEnumerable<Alarm> GetAll()
+        public IEnumerable<Alarm> GetAllByServiceId(string serviceId)
         {
-            return _context.Alarms.Select(a => new Alarm() { Message = a.Message, NamoOfClient = a.ClientName, Risk = a.Risk, TimeOfAlarm = a.TimeOfAlarm }).ToList();
+            return _context.Alarms
+                .Where(a => a.ServiceId == serviceId)
+                .Select(a => new Alarm() { Message = a.Message, ClientName = a.ClientName, Risk = a.Risk, TimeOfAlarm = a.TimeOfAlarm })
+                .ToList();
         }
-        #endregion
+
+        #endregion Alarm
 
         #region ClientRequests
+
         public void AddClientRequest(string clientName)
         {
-            if (_context.ClientRequests.Select(s=> s.ClientName).Where(item=> item.Equals(clientName, StringComparison.OrdinalIgnoreCase)).Count() < 1)
+            if (_context.ClientRequests.Select(s => s.ClientName).Where(item => item.Equals(clientName, StringComparison.OrdinalIgnoreCase)).Count() < 1)
             {
                 _context.ClientRequests.Add(new ClientRequestsEntity() { ClientName = clientName });
                 _context.SaveChanges();
@@ -69,6 +75,7 @@ namespace DAL
         {
             return _context.ClientRequests.Select(s => s.ClientName).ToList();
         }
-        #endregion
+
+        #endregion ClientRequests
     }
 }
